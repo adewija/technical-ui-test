@@ -1,0 +1,201 @@
+Feature: Landing Page
+
+  Scenario: Open Stockbit Homepage
+    When the user go to https://stockbit.com/
+    Then the user should redirected to stockbit homepage
+
+  Scenario: Open Stockbit Homepage by Clicking Stockbit Icon
+    Given the user is already on stockbit homepage
+    When the user click stockbit icon
+    Then the user should redirected to stockbit homepage
+
+  Scenario: Open Investing Landing Page
+    Given the user is already on stockbit homepage
+    When the user click "Investing" button on header
+    Then the user should redirected to investing landing page
+
+  Scenario: Open Pro Tools Landing Page
+    Given the user is already on stockbit homepage
+    When the user click "Pro Tools" button on header
+    Then the user should redirected to pro tools landing page
+
+  Scenario: Open Register Page
+    Given the user is already on stockbit homepage
+    When the user click "Sign Up" button on header
+    Then the user should redirected to register page
+
+Feature: Register
+
+  Scenario: Register with Google
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Google" button
+    Then the user should redirect to google account page
+
+  Scenario: Register with Email Get Captcha Failed
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the correct password
+    And the user input the correct confirm password
+    And the user click "Register" button
+    And the user input the correct phone number
+    And the user click "Verify phone number" button
+    Then the user should see "Captcha Failed" message
+
+  Scenario: Register with Phone Number Already Registered
+    Given the user isn't registered yet to the stockbit
+    Given the phone number is already registered
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the correct password
+    And the user input the correct confirm password
+    And the user click "Register" button
+    And the user input the phone number that already registered
+    And the user click "Verify phone number" button
+    Then the user should see "Nomor telpon sudah terdaftar" message
+
+  Scenario: Register with Incorrect Email
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the incorrect email format
+    Then the user should see message "Format email salah"
+    And the user should see error icon in email field
+
+  Scenario: Register with Registered Email
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the registered email
+    Then the user should see message "Email sudah terdaftar"
+    And the user should see error icon in email field
+
+  Scenario: Register with Unavailable Username
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the unavailable username
+    Then the user should see "username tidak tersedia" message
+
+  Scenario: Register with Unavailable Username
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the unavailable username
+    Then the user should see "username tidak tersedia" message
+
+  Scenario: Register with Incorrect Password Below 6 Characters
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the incorrect password with 5 characters
+    Then the user should see message "value harus terdiri dari minimal 6 karakter"
+    And the user should see error icon in password field
+
+  Scenario: Register with Incorrect Password Above 18 Characters
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the incorrect password with 19 characters
+    Then the user should see message "value tidak dapat melebihi 18 karakter"
+    And the user should see error icon in password field
+
+  Scenario: Register with Incorrect Confirm Password
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the correct password
+    And the user input the incorrect confirm password
+    Then the user should see message "Password does not match"
+    And the user should see error icon in confirm password field
+
+  Scenario: Register with Incorrect Phone Number Below 10 Digits
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the correct password
+    And the user input the correct confirm password
+    And the user click "Register" button
+    And the user input the incorrect phone number with 9 digits
+    And the user click "Verify phone number" button
+    Then the user should see message "Gagal mengirim kode verifikasi"
+
+  Scenario: Register with Incorrect Phone Number Above 13 Digits
+    Given the user isn't registered yet to the stockbit
+    Given the user is already on register page
+    When the user click "Register with Email" button
+    And the user input the correct name
+    And the user input the correct email
+    And the user input the correct username
+    And the user input the correct password
+    And the user input the correct confirm password
+    And the user click "Register" button
+    And the user input the incorrect phone number with 14 digits
+    And the user click "Verify phone number" button
+    Then the user should see message "Gagal mengirim kode verifikasi"
+
+Feature: Login
+
+  Scenario: Login with Facebook
+    Given the user is already registered to the stockbit
+    Given the user is already on login page
+    When the user click "Log in with Facebook" button
+    Then the user should redirect to facebook page
+
+  Scenario: Login with Incorrect Username
+    Given the user is already registered to the stockbit
+    Given the user is already on login page
+    When the user input the incorrect username
+    And the user input the correct password
+    And the user click "Login" button
+    Then the user should see message "Username atau password salah. Mohon coba lagi."
+
+  Scenario: Login with Incorrect Password
+    Given the user is already registered to the stockbit
+    Given the user is already on login page
+    When the user input the correct username
+    And the user input the incorrect password
+    And the user click "Login" button
+    Then the user should see message "Username atau password salah. Mohon coba lagi."
+
+  Scenario: User Able to See their Password on Login Page
+    Given the user is already registered to the stockbit
+    Given the user is already on login page
+    When the user input the correct username
+    And the user input the correct password
+    And the user click eye icon
+    Then the user should see their password
+    And eye icon change to close eye icon
+
+  Scenario: User unable to See their Password on Login Page
+    Given the user is already registered to the stockbit
+    Given the user is already on login page
+    When the user input the correct username
+    And the user input the correct password
+    Then the user shouldn't see their password
+    And the user should see eye icon
